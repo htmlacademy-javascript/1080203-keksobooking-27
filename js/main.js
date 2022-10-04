@@ -1,20 +1,19 @@
-function getIntegerNumber(min, max) {
+function getRandomPositiveIntegerNumber(min, max) {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
 
-  if (min < 0 || max < 0 || max < min) {
-    return NaN;
-  }
+  const result = Math.random() * (upper - lower + 1) + lower;
 
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(result);
 }
-getIntegerNumber(5, 10);
+getRandomPositiveIntegerNumber(-1.5, 10);
 
+function getRandomPositiveFloatNumber(min, max, decimalPlaces = 1) {
+  const lower = Math.min(Math.abs(min), Math.abs(max));
+  const upper = Math.max(Math.abs(min), Math.abs(max));
 
-function getFloatNumber(min, max, decimalPlaces) {
+  const result = Math.random() * (upper - lower) + lower;
 
-  if (min < 0 || max < 0 || max < min) {
-    return NaN;
-  }
-
-  return +(Math.random() * (max - min + 1) + min).toFixed(decimalPlaces);
+  return +result.toFixed(decimalPlaces);
 }
-getFloatNumber(1.5, 10.9, 1);
+getRandomPositiveFloatNumber(1.5, 1.7, 3);
