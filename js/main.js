@@ -53,13 +53,13 @@ function getDescriptionOfSimilarAdNearby(photoNumber) {
 }
 
 function createArrayOfSimilarAdsNearby(objectsCount) {
-  const arr = [];
+  const ads = [];
 
   for (let i = 1; i <= objectsCount; i++) {
-    arr.push(getDescriptionOfSimilarAdNearby(i));
+    ads.push(getDescriptionOfSimilarAdNearby(i));
   }
 
-  return arr;
+  return ads;
 }
 
 createArrayOfSimilarAdsNearby(10);
