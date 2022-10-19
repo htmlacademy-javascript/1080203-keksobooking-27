@@ -1,3 +1,5 @@
-import {createArrayOfSimilarAdsNearby} from './data.js';
+import {createHtmlOfSimilarAdsNearby} from './adsGenerator.js';
 
-createArrayOfSimilarAdsNearby(10);
+const similarAdsNearby = createHtmlOfSimilarAdsNearby(10);
+
+document.querySelector('#map-canvas').appendChild(similarAdsNearby);
