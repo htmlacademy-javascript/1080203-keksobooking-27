@@ -1,3 +1,6 @@
 import {createArrayOfSimilarAdsNearby} from './data.js';
+import {renderArrAdsContentData} from './ads.js';
 
-createArrayOfSimilarAdsNearby(10);
+const ads = createArrayOfSimilarAdsNearby(1);
+
+renderArrAdsContentData(ads);
