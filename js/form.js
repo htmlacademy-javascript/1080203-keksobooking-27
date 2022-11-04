@@ -1,3 +1,5 @@
+import {addOrRemoveClassName} from './utils.js';
+
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
@@ -8,18 +10,18 @@ function changeFormElementsActivity(elementsArray, activity) {
 }
 
 function deactivateAdsPage() {
-  adForm.classList.add('ad-form--disabled');
+  addOrRemoveClassName(adForm, 'add', 'ad-form--disabled');
   changeFormElementsActivity(adForm.children, true);
 
-  mapFilters.classList.add('ad-form--disabled');
+  addOrRemoveClassName(mapFilters, 'add', 'ad-form--disabled');
   changeFormElementsActivity(mapFilters.children, true);
 }
 
 function activateAdsPage() {
-  adForm.classList.remove('ad-form--disabled');
+  addOrRemoveClassName(adForm, 'remove', 'ad-form--disabled');
   changeFormElementsActivity(adForm.children, false);
 
-  mapFilters.classList.remove('ad-form--disabled');
+  addOrRemoveClassName(mapFilters, 'remove', 'ad-form--disabled');
   changeFormElementsActivity(mapFilters.children, false);
 }
 
