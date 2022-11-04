@@ -16,4 +16,8 @@ function getRandomPositiveFloatNumber(min, max, decimalPlaces = 1) {
   return +result.toFixed(decimalPlaces);
 }
 
-export {getRandomPositiveIntegerNumber, getRandomPositiveFloatNumber};
+function addOrRemoveClassName(element, method, className) {
+  element.classList[method](className);
+}
+
+export {getRandomPositiveIntegerNumber, getRandomPositiveFloatNumber, addOrRemoveClassName};
