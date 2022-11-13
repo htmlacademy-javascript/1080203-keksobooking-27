@@ -20,4 +20,14 @@ function addOrRemoveClassName(element, method, className) {
   element.classList[method](className);
 }
 
-export {getRandomPositiveIntegerNumber, getRandomPositiveFloatNumber, addOrRemoveClassName};
+function getMaxNumberInArray(numberArray) {
+  let maxNumber = numberArray[0];
+  numberArray.forEach((number) => {
+    if (number > maxNumber) {
+      maxNumber = number;
+    }
+  });
+  return maxNumber;
+}
+
+export {getRandomPositiveIntegerNumber, getRandomPositiveFloatNumber, addOrRemoveClassName, getMaxNumberInArray};
