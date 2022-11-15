@@ -36,9 +36,8 @@ function isFieldEmpty(field) {
 
 function changeSelectedOption(value, options) {
   for (let i = 0; i < options.children.length; i++) {
-    options.children[i].removeAttribute('selected');
     if (value === options.children[i].value) {
-      options.children[i].setAttribute('selected', true);
+      options.value = value;
     }
   }
 }
