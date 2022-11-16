@@ -34,7 +34,7 @@ function isFieldEmpty(field) {
   return field.value === '';
 }
 
-function changeSelectedOption(value, options) {
+function changeSelectValue(value, options) {
   for (let i = 0; i < options.children.length; i++) {
     if (value === options.children[i].value) {
       options.value = value;
@@ -48,5 +48,5 @@ export {
   addOrRemoveClassName,
   getMaxNumberInArray,
   isFieldEmpty,
-  changeSelectedOption
+  changeSelectValue
 };
