@@ -30,4 +30,23 @@ function getMaxNumberInArray(numberArray) {
   return maxNumber;
 }
 
-export {getRandomPositiveIntegerNumber, getRandomPositiveFloatNumber, addOrRemoveClassName, getMaxNumberInArray};
+function isFieldEmpty(field) {
+  return field.value === '';
+}
+
+function changeSelectValue(value, options) {
+  for (let i = 0; i < options.children.length; i++) {
+    if (value === options.children[i].value) {
+      options.value = value;
+    }
+  }
+}
+
+export {
+  getRandomPositiveIntegerNumber,
+  getRandomPositiveFloatNumber,
+  addOrRemoveClassName,
+  getMaxNumberInArray,
+  isFieldEmpty,
+  changeSelectValue
+};
