@@ -1,12 +1,10 @@
 import {createArrayOfSimilarAdsNearby} from './data.js';
-import {renderArrAdsContentData} from './ads.js';
-import {deactivateAdsPage, activateAdsPage} from './form-activity.js';
+import {insertBaloonsOnMap} from './ads.js';
 import './form-validate.js';
+import './map.js';
+import './form-slider.js';
 
-const ads = createArrayOfSimilarAdsNearby(1);
+const ads = createArrayOfSimilarAdsNearby(10);
 
-renderArrAdsContentData(ads);
-
-deactivateAdsPage();
-activateAdsPage();
+insertBaloonsOnMap(ads);
 

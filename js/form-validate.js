@@ -112,3 +112,5 @@ adForm.addEventListener('submit', (evt) => {
     // Show incorrect fields
   }
 });
+
+export {pristine, adForm, housingPrice};

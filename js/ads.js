@@ -1,6 +1,6 @@
-const adsTemplate = document.querySelector('#card').content.querySelector('.popup');
-const adsCanvasMap = document.querySelector('#map-canvas');
+import {createMapBaloon, pinIcon} from './map.js';
 
+const adsTemplate = document.querySelector('#card').content.querySelector('.popup');
 const HOUSING_TYPES = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -31,10 +31,8 @@ function isAdDescription(element, description) {
   return (element.querySelector('.popup__description').textContent = description);
 }
 
-function renderArrAdsContentData(adsContent) {
-  const adsFragment = document.createDocumentFragment();
-
-  adsContent.forEach(({author, offer}) => {
+function insertBaloonsOnMap(adsContent) {
+  adsContent.forEach(({author, offer, location: {lat, lng}}) => {
     const adsElement = adsTemplate.cloneNode(true);
     const adFeatureList = adsElement.querySelector('.popup__features');
     const adPhotoList = adsElement.querySelector('.popup__photos');
@@ -50,11 +48,9 @@ function renderArrAdsContentData(adsContent) {
     isAdDescription(adsElement, offer.description);
     renderAdContentList(offer.photos, adPhotoList, createAdPhotoTemplate);
 
-    adsFragment.appendChild(adsElement);
+    createMapBaloon(lat, lng, pinIcon, adsElement);
   });
-
-  adsCanvasMap.appendChild(adsFragment);
 }
 
-export {renderArrAdsContentData};
+export {insertBaloonsOnMap};
 
