@@ -1,4 +1,4 @@
-import {createMapBaloon, pinIcon} from './map.js';
+import {createMapBalloon, pinIcon} from './map.js';
 
 const adsTemplate = document.querySelector('#card').content.querySelector('.popup');
 const HOUSING_TYPES = {
@@ -31,7 +31,7 @@ function isAdDescription(element, description) {
   return (element.querySelector('.popup__description').textContent = description);
 }
 
-function insertBaloonsOnMap(adsContent) {
+function insertBalloonsOnMap(adsContent) {
   adsContent.forEach(({author, offer, location: {lat, lng}}) => {
     const adsElement = adsTemplate.cloneNode(true);
     const adFeatureList = adsElement.querySelector('.popup__features');
@@ -48,9 +48,9 @@ function insertBaloonsOnMap(adsContent) {
     isAdDescription(adsElement, offer.description);
     renderAdContentList(offer.photos, adPhotoList, createAdPhotoTemplate);
 
-    createMapBaloon(lat, lng, pinIcon, adsElement);
+    createMapBalloon(lat, lng, pinIcon, adsElement);
   });
 }
 
-export {insertBaloonsOnMap};
+export {insertBalloonsOnMap};
 

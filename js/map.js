@@ -1,14 +1,24 @@
 import {deactivateAdsPage, activateAdsPage} from './form-activity.js';
 
+const CENTER_OF_TOKYO = {
+  lat: 35.68323,
+  lng: 139.75364
+};
+
 deactivateAdsPage();
+
+function setInAddressFieldLatLng(fieldSelector, lat, lng) {
+  document.querySelector(fieldSelector).value = `${lat}, ${lng}`;
+}
 
 const map = L.map('map-canvas')
   .on('load', () => {
     activateAdsPage();
+    setInAddressFieldLatLng('#address', CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
   })
   .setView({
-    lat: 35.68323494144002,
-    lng: 139.75364685058597,
+    lat: CENTER_OF_TOKYO.lat,
+    lng: CENTER_OF_TOKYO.lng,
   }, 12);
 
 const pinIcon = L.icon({
@@ -25,8 +35,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6971769911219,
-    lng: 139.74540710449222,
+    lat: CENTER_OF_TOKYO.lat,
+    lng: CENTER_OF_TOKYO.lng,
   },
   {
     draggable: true,
@@ -44,10 +54,10 @@ L.tileLayer(
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
-  document.querySelector('#address').value = `${evt.target.getLatLng().lat}, ${evt.target.getLatLng().lng}`;
+  setInAddressFieldLatLng('#address', evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
 });
 
-function createMapBaloon(lat, lng, icon, content) {
+function createMapBalloon(lat, lng, icon, content) {
   const marker = L.marker(
     {
       lat,
@@ -63,5 +73,5 @@ function createMapBaloon(lat, lng, icon, content) {
     .bindPopup(content);
 }
 
-export {createMapBaloon, pinIcon};
+export {createMapBalloon, pinIcon};
 
