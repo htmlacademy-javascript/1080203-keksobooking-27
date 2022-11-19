@@ -113,4 +113,4 @@ adForm.addEventListener('submit', (evt) => {
   }
 });
 
-export {pristine, adForm, housingPrice};
+export {pristine, adForm, housingPrice, MAX_HOUSING_PRICE};
