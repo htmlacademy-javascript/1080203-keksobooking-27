@@ -1,10 +1,9 @@
-import {createArrayOfSimilarAdsNearby} from './data.js';
-import {insertBalloonsOnMap} from './ads.js';
+// import {createArrayOfSimilarAdsNearby} from './data.js';
 import './form-validate.js';
 import './map.js';
 import './form-slider.js';
+import './api.js';
 
-const ads = createArrayOfSimilarAdsNearby(10);
+// const ads = createArrayOfSimilarAdsNearby(10);
 
-insertBalloonsOnMap(ads);
 

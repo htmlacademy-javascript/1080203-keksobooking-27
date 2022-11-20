@@ -10,24 +10,31 @@ function changeFormElementsActivity(elementsArray, activity) {
   });
 }
 
+function changeMapFilterActivity(action, deactivationClassName, fieldsActivity) {
+  addOrRemoveClassName(mapFilters, action, deactivationClassName);
+  changeFormElementsActivity(mapFilters.children, fieldsActivity);
+}
+
+function changeAdFormActivity(action, deactivationClassName, fieldsActivity) {
+  addOrRemoveClassName(adForm, action, deactivationClassName);
+  changeFormElementsActivity(adForm.children, fieldsActivity);
+}
+
 function deactivateAdsPage() {
   adFormSlider.setAttribute('disabled', true);
-
-  addOrRemoveClassName(adForm, 'add', 'ad-form--disabled');
-  changeFormElementsActivity(adForm.children, true);
-
-  addOrRemoveClassName(mapFilters, 'add', 'ad-form--disabled');
-  changeFormElementsActivity(mapFilters.children, true);
+  changeAdFormActivity('add', 'ad-form--disabled', true);
+  changeMapFilterActivity('add', 'ad-form--disabled', true);
 }
 
 function activateAdsPage() {
   adFormSlider.removeAttribute('disabled');
-
-  addOrRemoveClassName(adForm, 'remove', 'ad-form--disabled');
-  changeFormElementsActivity(adForm.children, false);
-
-  addOrRemoveClassName(mapFilters, 'remove', 'ad-form--disabled');
-  changeFormElementsActivity(mapFilters.children, false);
+  changeAdFormActivity('remove', 'ad-form--disabled', false);
+  changeMapFilterActivity('remove', 'ad-form--disabled', false);
 }
 
-export {deactivateAdsPage, activateAdsPage};
+export {
+  deactivateAdsPage,
+  activateAdsPage,
+  changeMapFilterActivity,
+  adFormSlider
+};

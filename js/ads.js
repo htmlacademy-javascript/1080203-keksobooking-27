@@ -1,13 +1,7 @@
 import {createMapBalloon, pinIcon} from './map.js';
+import {HOUSING_TYPES} from './const.js';
 
 const adsTemplate = document.querySelector('#card').content.querySelector('.popup');
-const HOUSING_TYPES = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец',
-  hotel: 'Отель'
-};
 
 function createAdFeatureTemplate(feature) {
   return `<li class="popup__feature popup__feature--${feature}"></li>`;
@@ -18,12 +12,17 @@ function createAdPhotoTemplate(photoSrc) {
 }
 
 function renderAdContentList(content, listDomElement, createTemplateAction) {
+  if (!content) {
+    listDomElement.classList.add('hidden');
+    return;
+  }
+  listDomElement.classList.remove('hidden');
   listDomElement.textContent = '';
   content.forEach((el) => listDomElement.insertAdjacentHTML('beforeend', createTemplateAction(el)));
 }
 
 function isAdDescription(element, description) {
-  if (description.length === 0) {
+  if (!description) {
     element.querySelector('.popup__description').classList.add('hidden');
     return;
   }

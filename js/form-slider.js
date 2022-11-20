@@ -1,4 +1,5 @@
-import {pristine, adForm, housingPrice, MAX_HOUSING_PRICE} from './form-validate.js';
+import {pristine, adForm, housingPrice, housingType} from './form-validate.js';
+import {MAX_HOUSING_PRICE, MIN_PRICE_BY_HOUSING_TYPE} from './const.js';
 
 const housingPriceSlider = adForm.querySelector('.ad-form__slider');
 
@@ -7,7 +8,7 @@ noUiSlider.create(housingPriceSlider, {
     min: 0,
     max: MAX_HOUSING_PRICE,
   },
-  start: 1000,
+  start: MIN_PRICE_BY_HOUSING_TYPE[housingType.value],
   step: 1,
   connect: 'lower',
 });

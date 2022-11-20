@@ -1,26 +1,22 @@
 import {getMaxNumberInArray, isFieldEmpty, changeSelectValue} from './utils.js';
+import {sendAdFormData} from './api.js';
+import {resetAdForm} from './form-reset.js';
+import {
+  MIN_PRICE_BY_HOUSING_TYPE,
+  MAX_HOUSING_PRICE,
+  ROOMS_CAPACITY
+} from './const.js';
 
 const adForm = document.querySelector('.ad-form');
+const adTitle = adForm.querySelector('#title');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const housingType = adForm.querySelector('#type');
 const housingPrice = adForm.querySelector('#price');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
-const MIN_PRICE_BY_HOUSING_TYPE = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000
-};
-const MAX_HOUSING_PRICE = 100000;
-const ROOMS_CAPACITY = {
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
-  '100': ['0']
-};
+const adFormSubmitBtn = adForm.querySelector('.ad-form__submit');
+
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--invalid',
@@ -83,7 +79,7 @@ function getHousingPriceErrorMessageMax() {
   return `Не более ${MAX_HOUSING_PRICE} руб.`;
 }
 
-pristine.addValidator(adForm.querySelector('#title'), validateAdFormTitle, 'От 30 до 100 символов');
+pristine.addValidator(adTitle, validateAdFormTitle, 'От 30 до 100 символов');
 pristine.addValidator(housingPrice, validateAdFormPrice, getHousingPriceErrorMessage);
 pristine.addValidator(housingPrice, validateAdFormPriceMax, getHousingPriceErrorMessageMax);
 pristine.addValidator(capacity, validateAdFormRooms, getCapacityErrorMessage);
@@ -104,13 +100,29 @@ timeOut.addEventListener('change', () => {
   changeSelectValue(timeOut.value, timeIn);
 });
 
+function changeActivtyAdFormSubmitBtn(status) {
+  if (status) {
+    adFormSubmitBtn.removeAttribute('disabled');
+  } else {
+    adFormSubmitBtn.setAttribute('disabled', true);
+    adFormSubmitBtn.blur();
+  }
+}
+
+
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (isAdFormValid()) {
-    // Send data on server
-  } else {
-    // Show incorrect fields
+    sendAdFormData(new FormData(adForm));
   }
 });
 
-export {pristine, adForm, housingPrice, MAX_HOUSING_PRICE};
+adForm.addEventListener('reset', resetAdForm);
+
+export {
+  pristine,
+  adForm,
+  housingPrice,
+  housingType,
+  changeActivtyAdFormSubmitBtn
+};
