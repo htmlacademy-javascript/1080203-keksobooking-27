@@ -1,36 +1,44 @@
-import {resetAdForm} from './form-reset.js';
-import {changeActivtyAdFormSubmitBtn} from './form-validate.js';
+import {isEscapeKey} from './utils.js';
 
-function hideAdFormPopup(evt) {
-  const errorPopup = document.querySelector('.error');
-  const successPopup = document.querySelector('.success');
+function getMessagePopupAction(element) {
+  if (element) {
+    element.remove();
+    element.removeEventListener('click', formPopupHandler);
+    window.removeEventListener('keydown', formPopupHandler);
+  }
+}
 
-  if (evt.type === 'click' || (evt.type === 'keydown' && evt.key === 'Escape')) {
-    if (errorPopup) {
-      document.querySelector('body').removeChild(errorPopup);
-      errorPopup.removeEventListener('click', hideAdFormPopup);
-      if (evt.key === 'Escape') {
-        window.removeEventListener('keydown', hideAdFormPopup);
+function formPopupHandler(evt) {
+  const errorPopupElement = document.querySelector('.error');
+  const successPopupElement = document.querySelector('.success');
+
+  switch (evt.type) {
+    case 'click':
+      getMessagePopupAction(errorPopupElement);
+      getMessagePopupAction(successPopupElement);
+      break;
+    case 'keydown':
+      if (isEscapeKey(evt)) {
+        evt.preventDefault();
+        getMessagePopupAction(errorPopupElement);
+        getMessagePopupAction(successPopupElement);
       }
-    }
-    if (successPopup) {
-      document.querySelector('body').removeChild(successPopup);
-      successPopup.removeEventListener('click', hideAdFormPopup);
-      if (evt.key === 'Escape') {
-        window.removeEventListener('keydown', hideAdFormPopup);
-      }
-      resetAdForm();
-    }
-    changeActivtyAdFormSubmitBtn(true);
+      break;
+    default:
+      getMessagePopupAction(errorPopupElement);
+      getMessagePopupAction(successPopupElement);
+      break;
   }
 }
 
 function showAdFormPopup(type) {
-  const adFormPopupTemplate = document.querySelector(`#${type}`).content.querySelector(`.${type}`);
-  const adFormPopupElement = adFormPopupTemplate.cloneNode(true);
+  const adFormPopupTemplateElement = document.querySelector(`#${type}`).content.querySelector(`.${type}`);
+  const adFormPopupElement = adFormPopupTemplateElement.cloneNode(true);
+
   document.querySelector('body').append(adFormPopupElement);
-  adFormPopupElement.addEventListener('click', hideAdFormPopup);
-  window.addEventListener('keydown', hideAdFormPopup);
+
+  adFormPopupElement.addEventListener('click', formPopupHandler);
+  window.addEventListener('keydown', formPopupHandler);
 }
 
 export {showAdFormPopup};

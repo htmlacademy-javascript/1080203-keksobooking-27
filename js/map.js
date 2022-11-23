@@ -1,7 +1,4 @@
-import {deactivateAdsPage, activateAdsPage} from './form-activity.js';
 import {CENTER_OF_TOKYO} from './const.js';
-
-deactivateAdsPage();
 
 function setInAddressFieldLatLng(lat, lng) {
   document.querySelector('#address').value = `${lat}, ${lng}`;
@@ -9,7 +6,6 @@ function setInAddressFieldLatLng(lat, lng) {
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    activateAdsPage();
     setInAddressFieldLatLng(CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
   })
   .setView({
@@ -46,7 +42,6 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
@@ -63,7 +58,6 @@ function createMapBalloon(lat, lng, icon, content) {
       icon: icon,
     },
   );
-
   marker
     .addTo(map)
     .bindPopup(content);
@@ -76,4 +70,3 @@ export {
   mainPinMarker,
   map
 };
-

@@ -1,8 +1,16 @@
 import {addOrRemoveClassName} from './utils.js';
 
-const adForm = document.querySelector('.ad-form');
-const mapFilters = document.querySelector('.map__filters');
-const adFormSlider = document.querySelector('.ad-form__slider');
+const adFormElement = document.querySelector('.ad-form');
+const mapFiltersElement = document.querySelector('.map__filters');
+const adFormSliderElement = document.querySelector('.ad-form__slider');
+const mapElement = document.querySelector('.map__canvas');
+
+function changeMapChildElementActivity(value) {
+  const mapChildElements = mapElement.childNodes;
+  mapChildElements.forEach((el) => {
+    el.style.display = value;
+  });
+}
 
 function changeFormElementsActivity(elementsArray, activity) {
   Object.values(elementsArray).forEach((value) => {
@@ -11,30 +19,30 @@ function changeFormElementsActivity(elementsArray, activity) {
 }
 
 function changeMapFilterActivity(action, deactivationClassName, fieldsActivity) {
-  addOrRemoveClassName(mapFilters, action, deactivationClassName);
-  changeFormElementsActivity(mapFilters.children, fieldsActivity);
+  addOrRemoveClassName(mapFiltersElement, action, deactivationClassName);
+  changeFormElementsActivity(mapFiltersElement.children, fieldsActivity);
 }
 
 function changeAdFormActivity(action, deactivationClassName, fieldsActivity) {
-  addOrRemoveClassName(adForm, action, deactivationClassName);
-  changeFormElementsActivity(adForm.children, fieldsActivity);
+  addOrRemoveClassName(adFormElement, action, deactivationClassName);
+  changeFormElementsActivity(adFormElement.children, fieldsActivity);
 }
 
 function deactivateAdsPage() {
-  adFormSlider.setAttribute('disabled', true);
+  changeMapChildElementActivity('none');
+  adFormSliderElement.setAttribute('disabled', true);
   changeAdFormActivity('add', 'ad-form--disabled', true);
   changeMapFilterActivity('add', 'ad-form--disabled', true);
 }
 
 function activateAdsPage() {
-  adFormSlider.removeAttribute('disabled');
+  changeMapChildElementActivity('block');
+  adFormSliderElement.removeAttribute('disabled');
   changeAdFormActivity('remove', 'ad-form--disabled', false);
   changeMapFilterActivity('remove', 'ad-form--disabled', false);
 }
 
 export {
   deactivateAdsPage,
-  activateAdsPage,
-  changeMapFilterActivity,
-  adFormSlider
+  activateAdsPage
 };
