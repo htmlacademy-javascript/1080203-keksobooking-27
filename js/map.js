@@ -1,20 +1,12 @@
-import {deactivateAdsPage, activateAdsPage} from './form-activity.js';
+import {CENTER_OF_TOKYO} from './const.js';
 
-const CENTER_OF_TOKYO = {
-  lat: 35.68323,
-  lng: 139.75364
-};
-
-deactivateAdsPage();
-
-function setInAddressFieldLatLng(fieldSelector, lat, lng) {
-  document.querySelector(fieldSelector).value = `${lat}, ${lng}`;
+function setInAddressFieldLatLng(lat, lng) {
+  document.querySelector('#address').value = `${lat}, ${lng}`;
 }
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    activateAdsPage();
-    setInAddressFieldLatLng('#address', CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
+    setInAddressFieldLatLng(CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
   })
   .setView({
     lat: CENTER_OF_TOKYO.lat,
@@ -50,11 +42,10 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
-  setInAddressFieldLatLng('#address', evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
+  setInAddressFieldLatLng(evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
 });
 
 function createMapBalloon(lat, lng, icon, content) {
@@ -67,11 +58,15 @@ function createMapBalloon(lat, lng, icon, content) {
       icon: icon,
     },
   );
-
   marker
     .addTo(map)
     .bindPopup(content);
 }
 
-export {createMapBalloon, pinIcon};
-
+export {
+  createMapBalloon,
+  pinIcon,
+  setInAddressFieldLatLng,
+  mainPinMarker,
+  map
+};
