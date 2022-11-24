@@ -48,6 +48,8 @@ mainPinMarker.on('moveend', (evt) => {
   setInAddressFieldLatLng(evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
 });
 
+const markersLayer = L.layerGroup().addTo(map);
+
 function createMapBalloon(lat, lng, icon, content) {
   const marker = L.marker(
     {
@@ -59,7 +61,7 @@ function createMapBalloon(lat, lng, icon, content) {
     },
   );
   marker
-    .addTo(map)
+    .addTo(markersLayer)
     .bindPopup(content);
 }
 
@@ -68,5 +70,6 @@ export {
   pinIcon,
   setInAddressFieldLatLng,
   mainPinMarker,
-  map
+  map,
+  markersLayer
 };

@@ -80,6 +80,16 @@ function createMessageContainer(type, message, duration) {
   }, duration);
 }
 
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 export {
   getRandomPositiveIntegerNumber,
   getRandomPositiveFloatNumber,
@@ -88,5 +98,6 @@ export {
   isEscapeKey,
   isFieldEmpty,
   changeSelectValue,
-  createMessageContainer
+  createMessageContainer,
+  debounce
 };
