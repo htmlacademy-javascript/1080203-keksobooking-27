@@ -5,17 +5,15 @@ const avatarPreviewElement = document.querySelector('.ad-form-header__preview > 
 const houseImageChooserElement = document.querySelector('#images');
 const houseImagePreviewBox = document.querySelector('.ad-form__photo');
 
-function isImageTypeCorrect(fileName, types) {
-  return types.some((imageType) => fileName.endsWith(imageType));
-}
+const isImageTypeCorrect = (fileName, types) => types.some((imageType) => fileName.endsWith(imageType));
 
-function setPreviewImageSrc(element, file) {
+const setPreviewImageSrc = (element, file) => {
   element.src = URL.createObjectURL(file);
-}
+};
 
-function setDefaultAvatar() {
+const setDefaultAvatar = () => {
   avatarPreviewElement.src = DEFAULT_AVATAR_FILE_PATH;
-}
+};
 
 avatarChooserElement.addEventListener('change', () => {
   const avatarFile = avatarChooserElement.files[0];
