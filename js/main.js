@@ -1,6 +1,7 @@
 import './api.js';
 import './form-validate.js';
 import './form-slider.js';
+import './form-images.js';
 import './map.js';
 import './map-filter.js';
 import {getData} from './api.js';

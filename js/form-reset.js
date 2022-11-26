@@ -1,5 +1,6 @@
 import {setInAddressFieldLatLng, mainPinMarker, map} from './map.js';
 import {pristine} from './form-validate.js';
+import {setDefaultAvatar} from './form-images.js';
 import {MIN_PRICE_BY_HOUSING_TYPE, CENTER_OF_TOKYO} from './const.js';
 
 const filterFormElement = document.querySelector('.map__filters');
@@ -19,6 +20,7 @@ const resetAdForm = () => {
   adFormSliderElement.noUiSlider.reset();
   mainPinMarker.setLatLng(CENTER_OF_TOKYO);
   map.closePopup();
+  setDefaultAvatar();
   adFormElement.querySelector('#avatar').value = '';
   adFormElement.querySelector('#title').value = '';
   setInAddressFieldLatLng(CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
@@ -30,6 +32,7 @@ const resetAdForm = () => {
   adFormElement.querySelector('#capacity').value = '1';
   adFormElement.querySelector('#description').value = '';
   adFormElement.querySelector('#images').value = '';
+  adFormElement.querySelector('.ad-form__photo').innerHTML = '';
   resetAdFormFeatures();
 };
 
