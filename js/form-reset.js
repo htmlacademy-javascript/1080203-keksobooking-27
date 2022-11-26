@@ -6,13 +6,13 @@ const filterFormElement = document.querySelector('.map__filters');
 const adFormElement = document.querySelector('.ad-form');
 const adFormSliderElement = document.querySelector('.ad-form__slider');
 
-function resetAdFormFeatures() {
+const resetAdFormFeatures = () => {
   adFormElement.querySelectorAll('.features__checkbox').forEach((feature) => {
     feature.checked = false;
   });
-}
+};
 
-function resetAdForm() {
+const resetAdForm = () => {
   filterFormElement.reset();
   adFormElement.reset();
   pristine.reset();
@@ -31,6 +31,6 @@ function resetAdForm() {
   adFormElement.querySelector('#description').value = '';
   adFormElement.querySelector('#images').value = '';
   resetAdFormFeatures();
-}
+};
 
 export {resetAdForm};

@@ -1,26 +1,24 @@
-function getRandomPositiveIntegerNumber(min, max) {
+const getRandomPositiveIntegerNumber = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
-function getRandomPositiveFloatNumber(min, max, decimalPlaces = 1) {
+const getRandomPositiveFloatNumber = (min, max, decimalPlaces = 1) => {
   const lower = Math.min(Math.abs(min), Math.abs(max));
   const upper = Math.max(Math.abs(min), Math.abs(max));
   const result = Math.random() * (upper - lower) + lower;
   return +result.toFixed(decimalPlaces);
-}
+};
 
-function isEscapeKey(evt) {
-  return evt.key === 'Escape';
-}
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function addOrRemoveClassName(element, method, className) {
+const addOrRemoveClassName = (element, method, className) => {
   element.classList[method](className);
-}
+};
 
-function getMaxNumberInArray(numberArray) {
+const getMaxNumberInArray = (numberArray) => {
   let maxNumber = numberArray[0];
   numberArray.forEach((number) => {
     if (number > maxNumber) {
@@ -28,21 +26,19 @@ function getMaxNumberInArray(numberArray) {
     }
   });
   return maxNumber;
-}
+};
 
-function isFieldEmpty(field) {
-  return field.value === '';
-}
+const isFieldEmpty = (field) => field.value === '';
 
-function changeSelectValue(value, options) {
+const changeSelectValue = (value, options) => {
   for (let i = 0; i < options.children.length; i++) {
     if (value === options.children[i].value) {
       options.value = value;
     }
   }
-}
+};
 
-function createMessageStyles(container, type, message) {
+const createMessageStyles = (container, type, message) => {
   container.style.zIndex = '10000';
   container.style.position = 'fixed';
   container.style.borderRadius = '20px';
@@ -69,16 +65,24 @@ function createMessageStyles(container, type, message) {
       container.style.backgroundColor = 'coral';
       break;
   }
-}
+};
 
-function createMessageContainer(type, message, duration) {
+const createMessageContainer = (type, message, duration) => {
   const alertContainer = document.createElement('div');
   createMessageStyles(alertContainer, type, message);
   document.body.append(alertContainer);
   setTimeout(() => {
     document.body.removeChild(alertContainer);
   }, duration);
-}
+};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 export {
   getRandomPositiveIntegerNumber,
@@ -88,5 +92,6 @@ export {
   isEscapeKey,
   isFieldEmpty,
   changeSelectValue,
-  createMessageContainer
+  createMessageContainer,
+  debounce
 };

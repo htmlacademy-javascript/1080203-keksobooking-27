@@ -31,15 +31,11 @@ Pristine.addMessages('ru', {
 
 Pristine.setLocale('ru');
 
-function validateAdFormTitle(value) {
-  return value.length >= 30 && value.length <= 100;
-}
+const validateAdFormTitle = (value) => value.length >= 30 && value.length <= 100;
 
-function validateAdFormRooms () {
-  return ROOMS_CAPACITY[roomNumberElement.value].includes(capacityElement.value);
-}
+const validateAdFormRooms = () => ROOMS_CAPACITY[roomNumberElement.value].includes(capacityElement.value);
 
-function getCapacityErrorMessage() {
+const getCapacityErrorMessage = () => {
   let errorMessage = '';
   if (roomNumberElement.value === '100') {
     errorMessage = 'Не для гостей';
@@ -51,35 +47,25 @@ function getCapacityErrorMessage() {
     `;
   }
   return errorMessage;
-}
+};
 
-function isAdFormValid() {
-  return pristine.validate();
-}
+const isAdFormValid = () => pristine.validate();
 
-function validateAdFormType() {
+const validateAdFormType = () => {
   if (!isFieldEmpty(housingPriceElement)) {
     pristine.validate(housingPriceElement);
     return;
   }
   housingPriceElement.placeholder = `От ${MIN_PRICE_BY_HOUSING_TYPE[housingTypeElement.value]} руб.`;
-}
+};
 
-function validateAdFormPrice() {
-  return (MIN_PRICE_BY_HOUSING_TYPE[housingTypeElement.value] <= +housingPriceElement.value);
-}
+const validateAdFormPrice = () => MIN_PRICE_BY_HOUSING_TYPE[housingTypeElement.value] <= +housingPriceElement.value;
 
-function getHousingPriceErrorMessage() {
-  return `Не менее ${MIN_PRICE_BY_HOUSING_TYPE[housingTypeElement.value]} руб.`;
-}
+const getHousingPriceErrorMessage = () => `Не менее ${MIN_PRICE_BY_HOUSING_TYPE[housingTypeElement.value]} руб.`;
 
-function validateAdFormPriceMax() {
-  return (+housingPriceElement.value <= MAX_HOUSING_PRICE);
-}
+const validateAdFormPriceMax = () => +housingPriceElement.value <= MAX_HOUSING_PRICE;
 
-function getHousingPriceErrorMessageMax() {
-  return `Не более ${MAX_HOUSING_PRICE} руб.`;
-}
+const getHousingPriceErrorMessageMax = () => `Не более ${MAX_HOUSING_PRICE} руб.`;
 
 pristine.addValidator(adTitleElement, validateAdFormTitle, 'От 30 до 100 символов');
 pristine.addValidator(housingPriceElement, validateAdFormPrice, getHousingPriceErrorMessage);
@@ -102,16 +88,16 @@ timeOutElement.addEventListener('change', () => {
   changeSelectValue(timeOutElement.value, timeInElement);
 });
 
-function changeAdFormSubmitActivity(status) {
+const changeAdFormSubmitActivity = (status) => {
   if (status) {
     adFormSubmitBtnElement.removeAttribute('disabled');
     return;
   }
   adFormSubmitBtnElement.setAttribute('disabled', true);
   adFormSubmitBtnElement.blur();
-}
+};
 
-function sendAdFormData() {
+const sendAdFormData = () => {
   adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -131,7 +117,7 @@ function sendAdFormData() {
       );
     }
   });
-}
+};
 
 adFormElement.addEventListener('reset', resetAdForm);
 
