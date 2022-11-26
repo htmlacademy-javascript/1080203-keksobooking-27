@@ -1,6 +1,5 @@
-import {ADS_COUNT, FILTER_PRICE_VALUES, DEBOUNCE_TIMEOUT_DELAY} from './const.js';
+import {FILTER_PRICE_VALUES, DEBOUNCE_TIMEOUT_DELAY} from './const.js';
 import {markersLayer} from './map.js';
-import {getData} from './api.js';
 import {insertBalloonsOnMap} from './ads.js';
 import {debounce} from './utils.js';
 
@@ -11,11 +10,9 @@ const housingRoomsElement = mapFiltersElement.querySelector('#housing-rooms');
 const housingGuestsElement = mapFiltersElement.querySelector('#housing-guests');
 const housingFeaturesElements = mapFiltersElement.querySelectorAll('#housing-features > input');
 
-function filterAdByType(ad, type) {
-  return type === 'any' || ad.offer.type === type;
-}
+const getFilterAdByType = (ad, type) => type === 'any' || ad.offer.type === type;
 
-function filterAdByPrice(ad, price) {
+const getFilterAdByPrice = (ad, price) => {
   switch (price) {
     case 'any':
       return true;
@@ -26,17 +23,13 @@ function filterAdByPrice(ad, price) {
     case 'high':
       return ad.offer.price > FILTER_PRICE_VALUES.high;
   }
-}
+};
 
-function filterAdByRoomsCount(ad, roomsCount) {
-  return roomsCount === 'any' || ad.offer.rooms === Number(roomsCount);
-}
+const getFilterAdByRoomsCount = (ad, roomsCount) => roomsCount === 'any' || ad.offer.rooms === Number(roomsCount);
 
-function filterAdByGuestsCount(ad, guestsCount) {
-  return guestsCount === 'any' || ad.offer.rooms === Number(guestsCount);
-}
+const getFilterAdByGuestsCount = (ad, guestsCount) => guestsCount === 'any' || ad.offer.guests === Number(guestsCount);
 
-function filterAdByFeatures(ad, features) {
+const getFilterAdByFeatures = (ad, features) => {
   if (!features.length) {
     return true;
   }
@@ -46,9 +39,9 @@ function filterAdByFeatures(ad, features) {
   }
 
   return features.every((feature) => ad.offer.features.includes(feature));
-}
+};
 
-function getSelectedFeatures(features) {
+const getSelectedFeatures = (features) => {
   const selectedFeaturesValues = [];
   Array.from(features).forEach((feature) => {
     if (feature.checked) {
@@ -57,34 +50,32 @@ function getSelectedFeatures(features) {
   });
 
   return selectedFeaturesValues;
-}
+};
 
-function filterSimilarAdsNearby(ads) {
+const filterSimilarAdsNearby = (ads) => {
   const filteredAds = [];
 
   for (const ad of ads) {
-    if (filteredAds.length >= ADS_COUNT) {
-      break;
-    }
-
     if (
-      filterAdByType(ad, housingTypeElement.value) &&
-      filterAdByPrice(ad, housingPriceElement.value) &&
-      filterAdByRoomsCount(ad, housingRoomsElement.value) &&
-      filterAdByGuestsCount(ad, housingGuestsElement.value) &&
-      filterAdByFeatures(ad, getSelectedFeatures(housingFeaturesElements))
+      getFilterAdByType(ad, housingTypeElement.value) &&
+      getFilterAdByPrice(ad, housingPriceElement.value) &&
+      getFilterAdByRoomsCount(ad, housingRoomsElement.value) &&
+      getFilterAdByGuestsCount(ad, housingGuestsElement.value) &&
+      getFilterAdByFeatures(ad, getSelectedFeatures(housingFeaturesElements))
     ) {
       filteredAds.push(ad);
     }
   }
   return filteredAds;
-}
+};
 
-mapFiltersElement.addEventListener('change', debounce(() => {
+const mapFilterHandler = (ads) => {
   markersLayer.clearLayers();
-  getData(
-    (ads) => {
-      insertBalloonsOnMap(filterSimilarAdsNearby(ads));
-    }
-  );
-}), DEBOUNCE_TIMEOUT_DELAY);
+  insertBalloonsOnMap(filterSimilarAdsNearby(ads));
+};
+
+const setFilterAdsContent = (ads) => {
+  mapFiltersElement.addEventListener('change', debounce(() => mapFilterHandler(ads), DEBOUNCE_TIMEOUT_DELAY));
+};
+
+export {setFilterAdsContent};

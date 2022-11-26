@@ -1,8 +1,8 @@
 import {CENTER_OF_TOKYO} from './const.js';
 
-function setInAddressFieldLatLng(lat, lng) {
+const setInAddressFieldLatLng = (lat, lng) => {
   document.querySelector('#address').value = `${lat}, ${lng}`;
-}
+};
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -12,6 +12,8 @@ const map = L.map('map-canvas')
     lat: CENTER_OF_TOKYO.lat,
     lng: CENTER_OF_TOKYO.lng,
   }, 12);
+
+const markersLayer = L.layerGroup().addTo(map);
 
 const pinIcon = L.icon({
   iconUrl: './img/pin.svg',
@@ -48,9 +50,7 @@ mainPinMarker.on('moveend', (evt) => {
   setInAddressFieldLatLng(evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
 });
 
-const markersLayer = L.layerGroup().addTo(map);
-
-function createMapBalloon(lat, lng, icon, content) {
+const createMapBalloon = (lat, lng, icon, content) => {
   const marker = L.marker(
     {
       lat,
@@ -63,7 +63,7 @@ function createMapBalloon(lat, lng, icon, content) {
   marker
     .addTo(markersLayer)
     .bindPopup(content);
-}
+};
 
 export {
   createMapBalloon,

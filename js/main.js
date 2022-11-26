@@ -8,12 +8,15 @@ import {deactivateAdsPage, activateAdsPage} from './form-activity.js';
 import {insertBalloonsOnMap} from './ads.js';
 import {sendAdFormData} from './form-validate.js';
 import {ADS_COUNT} from './const.js';
+import {setFilterAdsContent} from './map-filter.js';
 
 deactivateAdsPage();
 getData(
   (ads) => {
+    const adsLimit = ads.slice(0, ADS_COUNT);
     activateAdsPage();
-    insertBalloonsOnMap(ads.slice(0, ADS_COUNT));
+    insertBalloonsOnMap(adsLimit);
+    setFilterAdsContent(adsLimit);
   }
 );
 
