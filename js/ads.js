@@ -27,7 +27,7 @@ const isAdDescription = (element, description) => {
 };
 
 const insertBalloonsOnMap = (adsContent) => {
-  adsContent.forEach(({author, offer, location: {lat, lng}}) => {
+  adsContent.forEach(({author, offer, location}) => {
     const adsElement = adsTemplateElement.cloneNode(true);
     const adFeatureListElement = adsElement.querySelector('.popup__features');
     const adPhotoListElement = adsElement.querySelector('.popup__photos');
@@ -42,7 +42,7 @@ const insertBalloonsOnMap = (adsContent) => {
     renderAdContentList(offer.features, adFeatureListElement, createAdFeatureTemplate);
     isAdDescription(adsElement, offer.description);
     renderAdContentList(offer.photos, adPhotoListElement, createAdPhotoTemplate);
-    createMapBalloon(lat, lng, pinIcon, adsElement);
+    createMapBalloon(location, pinIcon, adsElement);
   });
 };
 

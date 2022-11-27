@@ -1,6 +1,7 @@
 import {FILTER_PRICE_VALUES, DEBOUNCE_TIMEOUT_DELAY} from './const.js';
 import {markersLayer} from './map.js';
 import {insertBalloonsOnMap} from './ads.js';
+import {ADS_COUNT} from './const.js';
 import {debounce} from './utils.js';
 
 const mapFiltersElement = document.querySelector('.map__filters');
@@ -56,6 +57,10 @@ const filterSimilarAdsNearby = (ads) => {
   const filteredAds = [];
 
   for (const ad of ads) {
+    if (filteredAds.length >= ADS_COUNT) {
+      break;
+    }
+
     if (
       getFilterAdByType(ad, housingTypeElement.value) &&
       getFilterAdByPrice(ad, housingPriceElement.value) &&

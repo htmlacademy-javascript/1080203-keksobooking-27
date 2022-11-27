@@ -7,6 +7,8 @@ import {
   MAX_HOUSING_PRICE,
   ROOMS_CAPACITY
 } from './const.js';
+import {insertBalloonsOnMap} from './ads.js';
+import {markersLayer} from './map.js';
 
 const adFormElement = document.querySelector('.ad-form');
 const adTitleElement = adFormElement.querySelector('#title');
@@ -17,6 +19,7 @@ const housingPriceElement = adFormElement.querySelector('#price');
 const timeInElement = adFormElement.querySelector('#timein');
 const timeOutElement = adFormElement.querySelector('#timeout');
 const adFormSubmitBtnElement = adFormElement.querySelector('.ad-form__submit');
+const resetBtnElement = adFormElement.querySelector('.ad-form__reset');
 
 const pristine = new Pristine(adFormElement, {
   classTo: 'ad-form__element',
@@ -97,7 +100,13 @@ const changeAdFormSubmitActivity = (status) => {
   adFormSubmitBtnElement.blur();
 };
 
-const sendAdFormData = () => {
+const resetAdFormHandler = (ads) => {
+  resetAdForm();
+  markersLayer.clearLayers();
+  insertBalloonsOnMap(ads);
+};
+
+const sendAdFormData = (ads) => {
   adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -105,7 +114,7 @@ const sendAdFormData = () => {
       changeAdFormSubmitActivity(false);
       sendData(
         () => {
-          resetAdForm();
+          resetAdFormHandler(ads);
           showAdFormPopup('success');
           changeAdFormSubmitActivity(true);
         },
@@ -119,9 +128,12 @@ const sendAdFormData = () => {
   });
 };
 
-adFormElement.addEventListener('reset', resetAdForm);
+const resetAll = (ads) => {
+  resetBtnElement.addEventListener('click', () => resetAdFormHandler(ads));
+};
 
 export {
   pristine,
-  sendAdFormData
+  sendAdFormData,
+  resetAll
 };

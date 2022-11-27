@@ -1,20 +1,5 @@
 import {CENTER_OF_TOKYO} from './const.js';
 
-const setInAddressFieldLatLng = (lat, lng) => {
-  document.querySelector('#address').value = `${lat}, ${lng}`;
-};
-
-const map = L.map('map-canvas')
-  .on('load', () => {
-    setInAddressFieldLatLng(CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
-  })
-  .setView({
-    lat: CENTER_OF_TOKYO.lat,
-    lng: CENTER_OF_TOKYO.lng,
-  }, 12);
-
-const markersLayer = L.layerGroup().addTo(map);
-
 const pinIcon = L.icon({
   iconUrl: './img/pin.svg',
   iconSize: [40, 40],
@@ -28,15 +13,22 @@ const mainPinIcon = L.icon({
 });
 
 const mainPinMarker = L.marker(
-  {
-    lat: CENTER_OF_TOKYO.lat,
-    lng: CENTER_OF_TOKYO.lng,
-  },
+  CENTER_OF_TOKYO,
   {
     draggable: true,
     icon: mainPinIcon,
   },
 );
+
+const setInAddressFieldLatLng = (lat, lng) => {
+  document.querySelector('#address').value = `${lat}, ${lng}`;
+};
+
+const map = L.map('map-canvas')
+  .on('load', () => {
+    setInAddressFieldLatLng(CENTER_OF_TOKYO.lat, CENTER_OF_TOKYO.lng);
+  })
+  .setView(CENTER_OF_TOKYO, 12);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -44,20 +36,20 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
 mainPinMarker.addTo(map);
 
 mainPinMarker.on('moveend', (evt) => {
   setInAddressFieldLatLng(evt.target.getLatLng().lat.toFixed(5), evt.target.getLatLng().lng.toFixed(5));
 });
 
-const createMapBalloon = (lat, lng, icon, content) => {
+const markersLayer = L.layerGroup().addTo(map);
+
+const createMapBalloon = (location, icon, content) => {
   const marker = L.marker(
+    location,
     {
-      lat,
-      lng,
-    },
-    {
-      icon: icon,
+      icon,
     },
   );
   marker
@@ -65,11 +57,15 @@ const createMapBalloon = (lat, lng, icon, content) => {
     .bindPopup(content);
 };
 
+const resetMap = () => {
+  map.setView(CENTER_OF_TOKYO, 12);
+  map.closePopup();
+  mainPinMarker.setLatLng(CENTER_OF_TOKYO);
+};
+
 export {
   createMapBalloon,
   pinIcon,
-  setInAddressFieldLatLng,
-  mainPinMarker,
-  map,
-  markersLayer
+  markersLayer,
+  resetMap
 };
