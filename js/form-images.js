@@ -3,7 +3,7 @@ import {FILE_TYPES, DEFAULT_AVATAR_FILE_PATH} from './const.js';
 const avatarChooserElement = document.querySelector('#avatar');
 const avatarPreviewElement = document.querySelector('.ad-form-header__preview > img');
 const houseImageChooserElement = document.querySelector('#images');
-const houseImagePreviewBox = document.querySelector('.ad-form__photo');
+const houseImagePreviewBoxElement = document.querySelector('.ad-form__photo');
 
 const isImageTypeCorrect = (fileName, types) => types.some((imageType) => fileName.endsWith(imageType));
 
@@ -11,8 +11,11 @@ const setPreviewImageSrc = (element, file) => {
   element.src = URL.createObjectURL(file);
 };
 
-const setDefaultAvatar = () => {
+const resetImage = () => {
+  avatarChooserElement.value = '';
+  houseImageChooserElement.value = '';
   avatarPreviewElement.src = DEFAULT_AVATAR_FILE_PATH;
+  houseImagePreviewBoxElement.textContent = '';
 };
 
 avatarChooserElement.addEventListener('change', () => {
@@ -29,7 +32,7 @@ houseImageChooserElement.addEventListener('change', () => {
   const houseImageFileName = houseImageFile.name.toLowerCase();
 
   if (isImageTypeCorrect(houseImageFileName, FILE_TYPES)) {
-    houseImagePreviewBox.innerHTML = '';
+    houseImagePreviewBoxElement.textContent = '';
 
     const houseImagePreviewElement = document.createElement('img');
 
@@ -38,8 +41,8 @@ houseImageChooserElement.addEventListener('change', () => {
     houseImagePreviewElement.style.maxWidth = '100%';
     houseImagePreviewElement.style.height = 'auto';
 
-    houseImagePreviewBox.append(houseImagePreviewElement);
+    houseImagePreviewBoxElement.append(houseImagePreviewElement);
   }
 });
 
-export {setDefaultAvatar};
+export {resetImage};
