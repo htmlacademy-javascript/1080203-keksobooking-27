@@ -3,12 +3,12 @@ import {isEscapeKey} from './utils.js';
 const getMessagePopupAction = (element) => {
   if (element) {
     element.remove();
-    element.removeEventListener('click', formPopupHandler);
-    window.removeEventListener('keydown', formPopupHandler);
+    element.removeEventListener('click', adFormPopupHandler);
+    window.removeEventListener('keydown', adFormPopupHandler);
   }
 };
 
-function formPopupHandler(evt) {
+function adFormPopupHandler(evt) {
   const errorPopupElement = document.querySelector('.error');
   const successPopupElement = document.querySelector('.success');
 
@@ -37,8 +37,8 @@ const showAdFormPopup = (type) => {
 
   document.querySelector('body').append(adFormPopupElement);
 
-  adFormPopupElement.addEventListener('click', formPopupHandler);
-  window.addEventListener('keydown', formPopupHandler);
+  adFormPopupElement.addEventListener('click', adFormPopupHandler);
+  window.addEventListener('keydown', adFormPopupHandler);
 };
 
 export {showAdFormPopup};
